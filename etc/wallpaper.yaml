@@ -18,13 +18,13 @@ Middlewares:
   Log: false
 
 Wx:
-  AppID: ''
-  AppSecret: ''
+  AppID: $WX_APP_ID
+  AppSecret: $WX_APP_SECRET
 
 Qiniu:
   Host: https://cdn.kaidon.cn
-  AccessKey: ''
-  SecretKey: ''
+  AccessKey: $QINIU_ACCESS_KEY
+  SecretKey: $QINIU_SECRET_KEY
   Bucket: goblog-image
   Style: preview
   Expire: 3600
@@ -38,9 +38,9 @@ Gorm:
   Params: charset=utf8mb4&parseTime=True&loc=Local
 
 Auth:
-  AccessSecret: ''
+  AccessSecret: $AUTH_ACCESS_SECRET
   AccessExpire: 86400        # Access Token 有效期：24 小时
-  RefreshSecret: ''
+  RefreshSecret: $AUTH_REFRESH_SECRET
   RefreshExpire: 604800       # Refresh Token 有效期：7 天
 
 Sls:
@@ -48,6 +48,6 @@ Sls:
   Endpoint: cn-hangzhou.log.aliyuncs.com
   Project: mp-wallpaper
   LogStore: internal-diagnostic_log
-  AccessKeyID: ''
-  AccessKeySecret: ''
+  AccessKeyID: $SLS_ACCESS_KEY_ID
+  AccessKeySecret: $SLS_ACCESS_KEY_SECRET
   Topic: wallpaper

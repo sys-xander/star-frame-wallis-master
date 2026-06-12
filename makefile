@@ -13,5 +13,5 @@ run:
 build:
 	goctl api swagger -api .\wallpaper.api -dir . --filename swagger
 	docker build -t wallpaper:latest .
-	docker tag wallpaper:latest registry.cn-hangzhou.aliyuncs.com/don178/pub:wallpaper
-	docker push registry.cn-hangzhou.aliyuncs.com/don178/pub:wallpaper
+	docker tag wallpaper:latest registry.cn-hangzhou.aliyuncs.com/don178/wallpaper:latest
+	docker push registry.cn-hangzhou.aliyuncs.com/don178/wallpaper:latest
