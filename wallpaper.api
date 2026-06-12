@@ -1,0 +1,259 @@
+syntax = "v1"
+
+type WxLoginCodeRst {
+	Code string `json:"code"`
+}
+
+type WxLoginCodeRsp {
+	ID           uint   `json:"id"`
+	Token        string `json:"token"`
+	RefreshToken string `json:"refresh_token"`
+	UserName     string `json:"username"`
+	AvatarUrl    string `json:"avatar_url"`
+	Phone        string `json:"phone"`
+	ExpireAt     int64  `json:"expire_at"`
+}
+
+type WxUserInfoRst {}
+
+type WxUserInfoRsp {
+	ID        uint   `json:"id"`
+	UserName  string `json:"username"`
+	AvatarUrl string `json:"avatar_url"`
+	Phone     string `json:"phone"`
+}
+
+type UpdateUserInfoRst {
+	UserName  string `json:"username, optional"`
+	AvatarUrl string `json:"avatar_url, optional"`
+	Phone     string `json:"phone, optional"`
+}
+
+type UpdateUserInfoRsp {}
+
+type UploadOssTokenRst {
+	TypeKey string `form:"type,options=avatar"`
+	Format  string `form:"format,options=jpg,png,jpeg"`
+}
+
+type UploadOssTokenRsp {
+	Token string `json:"token"`
+	Url   string `json:"url"`
+	Key   string `json:"key"`
+}
+
+type CategoriesListRst {}
+
+type CategoriesListRsp {
+	ID        uint   `json:"id"`
+	Name      string `json:"name"`
+	Url       string `json:"url"`
+	Count     uint   `json:"count"`
+	Icon      string `json:"icon"`
+	Gradient  string `json:"gradient"`
+	UpdatedAt string `json:"updated_at"`
+	CreatedAt string `json:"created_at"`
+}
+
+type RecommendWallpaperRst {}
+
+type RecommendWallpaper {
+	ID            uint   `json:"id"`
+	Title         string `json:"title"`
+	Url           string `json:"url"`
+	LikeCount     uint   `json:"like_count"`
+	DownloadCount uint   `json:"download_count"`
+	CollectCount  uint   `json:"collect_count"`
+	ViewCount     uint   `json:"view_count"`
+}
+
+type RecommendWallpaperRsp {
+	// 推荐
+	RecommendList []RecommendWallpaper `json:"recommend_list"`
+	// 最新
+	NewList []RecommendWallpaper `json:"new_list"`
+	// 最热
+	HotList []RecommendWallpaper `json:"hot_list"`
+	// 精选
+	SelectedList []RecommendWallpaper `json:"selected_list"`
+}
+
+type WallpaperDetailRst {
+	ID uint `form:"id"`
+}
+
+type WallpaperDetailRsp {
+	ID            uint                 `json:"id"`
+	Title         string               `json:"title"`
+	Url           string               `json:"url"`
+	CleanUrl      string               `json:"clean_url"`
+	LikeCount     uint                 `json:"like_count"`
+	DownloadCount uint                 `json:"download_count"`
+	CollectCount  uint                 `json:"collect_count"`
+	ViewCount     uint                 `json:"view_count"`
+	CreatedAt     string               `json:"created_at"`
+	Classify      string               `json:"classify"`
+	RecommendList []RecommendWallpaper `json:"recommend_list"`
+}
+
+type WallpaperListRst {
+	ClassifyId uint `form:"classify_id"`
+	Page       int  `form:"page, default=1"`
+	PageSize   int  `form:"page_size, default=10, range=[1:50]"`
+}
+
+type WallpaperListRsp {
+	ID            uint   `json:"id"`
+	Title         string `json:"title"`
+	Url           string `json:"url"`
+	LikeCount     uint   `json:"like_count"`
+	DownloadCount uint   `json:"download_count"`
+	CollectCount  uint   `json:"collect_count"`
+	ViewCount     uint   `json:"view_count"`
+}
+
+type UserClickOperationRst {
+	WallpaperId   uint64 `json:"id"`
+	Operation     string `json:"operation,options=like|collect|download"`
+	OperationType int    `json:"operation_type,options=1|2, default=1"`
+}
+
+type UserClickOperationRsp {}
+
+type UserClickOperationCheckRst {
+	WallpaperId uint `form:"id"`
+}
+
+type UserClickOperationCheckRsp {
+	IsLike     bool `json:"is_like"`
+	IsCollect  bool `json:"is_collect"`
+	IsDownload bool `json:"is_download"`
+}
+
+type RefreshTokenRst {
+	RefreshToken string `json:"refresh_token"`
+}
+
+type RefreshTokenRsp {
+	Token        string `json:"token"`
+	RefreshToken string `json:"refresh_token"`
+	ExpireAt     int64  `json:"expire_at"`
+}
+
+type UserClickOperationCountRst {}
+
+type UserClickOperationCountRsp {
+	LikeCount     int64 `json:"like_count"`
+	CollectCount  int64 `json:"collect_count"`
+	DownloadCount int64 `json:"download_count"`
+}
+
+type RecentDownloadWallpaperRst {}
+
+type RecentDownloadWallpaperRsp {
+	WallpaperList []WallpaperListRsp `json:"wallpaper_list"`
+}
+
+type UserClickOperationWallpaperRst {
+	Operation string `form:"operation,options=like|collect|download"`
+	Page      int    `form:"page, default=1"`
+	PageSize  int    `form:"page_size, default=10, range=[1:50]"`
+}
+
+type UserClickOperationWallpaperRsp {
+	WallpaperList []WallpaperListRsp `json:"wallpaper_list"`
+}
+
+type SearchWallpaperRst {
+	Keyword  string `form:"keyword"`
+	Page     int    `form:"page, default=1"`
+	PageSize int    `form:"page_size, default=10, range=[1:50]"`
+}
+
+type SearchWallpaperRsp {
+	WallpaperList []WallpaperListRsp `json:"wallpaper_list"`
+}
+
+type AnnouncementListRst {}
+
+type AnnouncementListRsp {
+	ID        uint   `json:"id"`
+	Title     string `json:"title"`
+	Content   string `json:"content"`
+	Type      uint8  `json:"type"`
+	Status    uint8  `json:"status"`
+	Cover     string `json:"cover"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// 登录相关接口
+@server (
+	group:  login
+	prefix: /login
+)
+service wallpaper {
+	@handler WxLoginCode
+	post /mp/code (WxLoginCodeRst) returns (WxLoginCodeRsp)
+
+	@handler RefreshToken
+	post /mp/refresh/token (RefreshTokenRst) returns (RefreshTokenRsp)
+}
+
+// 不需要登录就可以访问的接口
+@server (
+	group:  common
+	prefix: /common
+)
+service wallpaper {
+	@handler AnnouncementList
+	get /announcement/list (AnnouncementListRst) returns ([]AnnouncementListRsp)
+}
+
+// 需要登录才能访问的接口
+@server (
+	group:  mp
+	prefix: /mp
+	jwt:    Auth
+)
+service wallpaper {
+	@handler WxUserInfo
+	get /userinfo (WxUserInfoRst) returns (WxUserInfoRsp)
+
+	@handler UpdateUserInfo
+	put /userinfo (UpdateUserInfoRst) returns (UpdateUserInfoRsp)
+
+	@handler UploadOssToken
+	get /oss/token (UploadOssTokenRst) returns (UploadOssTokenRsp)
+
+	@handler CategoriesList
+	get /categories/list (CategoriesListRst) returns ([]CategoriesListRsp)
+
+	@handler RecommendWallpaper
+	get /recommend/wallpaper (RecommendWallpaperRst) returns (RecommendWallpaperRsp)
+
+	@handler WallpaperDetail
+	get /wallpaper/detail (WallpaperDetailRst) returns (WallpaperDetailRsp)
+
+	@handler WallpaperList
+	get /wallpaper/list (WallpaperListRst) returns ([]WallpaperListRsp)
+
+	@handler UserClickOperation
+	put /user/click/operation (UserClickOperationRst) returns (UserClickOperationRsp)
+
+	@handler UserClickOperationCheck
+	get /user/click/operation/check (UserClickOperationCheckRst) returns (UserClickOperationCheckRsp)
+
+	@handler UserClickOperationCount
+	get /user/click/operation/count (UserClickOperationCountRst) returns (UserClickOperationCountRsp)
+
+	@handler RecentDownloadWallpaper
+	get /user/recent/download/wallpaper (RecentDownloadWallpaperRst) returns (RecentDownloadWallpaperRsp)
+
+	@handler UserClickOperationWallpaper
+	get /user/click/operation/wallpaper (UserClickOperationWallpaperRst) returns (UserClickOperationWallpaperRsp)
+
+	@handler SearchWallpaper
+	get /search/wallpaper (SearchWallpaperRst) returns (SearchWallpaperRsp)
+}
+

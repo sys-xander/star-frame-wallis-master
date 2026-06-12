@@ -1,0 +1,53 @@
+Name: wallpaper
+Host: 0.0.0.0
+Port: 8888
+Mode: dev
+
+DevServer:
+  Enabled: true       # 是否启用（dev 模式默认 true）
+  Port: 6060          # 调试端口，默认 6060
+  HealthPath: /health # 健康检查路径
+  MetricsPath: /metrics
+  EnableMetrics: true # 是否开启指标
+
+Log:
+  ServiceName: wallpaper
+  Mode: console
+
+Middlewares:
+  Log: false
+
+Wx:
+  AppID: ''
+  AppSecret: ''
+
+Qiniu:
+  Host: https://cdn.kaidon.cn
+  AccessKey: ''
+  SecretKey: ''
+  Bucket: goblog-image
+  Style: preview
+  Expire: 3600
+
+Gorm:
+  User: $DB_USER
+  Password: $DB_PWD
+  Host: $DB_HOST
+  Port: $DB_PORT
+  Database: $DB_NAME
+  Params: charset=utf8mb4&parseTime=True&loc=Local
+
+Auth:
+  AccessSecret: ''
+  AccessExpire: 86400        # Access Token 有效期：24 小时
+  RefreshSecret: ''
+  RefreshExpire: 604800       # Refresh Token 有效期：7 天
+
+Sls:
+  Enabled: true
+  Endpoint: cn-hangzhou.log.aliyuncs.com
+  Project: mp-wallpaper
+  LogStore: internal-diagnostic_log
+  AccessKeyID: ''
+  AccessKeySecret: ''
+  Topic: wallpaper

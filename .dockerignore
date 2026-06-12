@@ -1,0 +1,65 @@
+# Git 相关
+.git
+.gitignore
+.gitattributes
+
+# 编译产物
+wallpaper
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# 依赖目录
+vendor/
+
+# 开发模板（go-zero 模板，仅生成代码用，构建无需）
+template/
+
+# 初始 SQL 数据
+data/
+
+# IDE 与编辑器
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.qoder
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+logs/
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+
+# 构建目录
+bin/
+dist/
+build/
+
+# 环境与敏感配置
+.env
+.env.local
+.env.*.local
+etc/*.yaml.local
+etc/*.yml.local
+
+# 证书与密钥
+*.pem
+*.key
+*.crt
+
+# 脚本
+scripts/
+makefile
